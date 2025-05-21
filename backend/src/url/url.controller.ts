@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param, Request, UseGuards } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, Request, UseGuards, Redirect } from '@nestjs/common';
 import { UrlService } from './url.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
@@ -19,7 +19,9 @@ export class UrlController {
     }
 
     @Get(':shortCode')
+    @Redirect()
     async redirect(@Param('shortCode') shortCode: string) {
-        return this.urlService.redirect(shortCode);
+        const longUrl = await this.urlService.redirect(shortCode);
+        return { url: longUrl, statusCode: 302 };
     }
 }

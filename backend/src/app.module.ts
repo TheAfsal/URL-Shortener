@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UrlModule } from './url/url.module';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -29,13 +28,7 @@ import { MongooseModule } from '@nestjs/mongoose';
     UrlModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
-export class AppModule {
-  constructor() {
-    console.log('AppModule DB_URL:', process.env.DB_URL);
-    if (!process.env.DB_URL) {
-      throw new Error('DB_URL environment variable is not set');
-    }
-  }
-}
+
+export class AppModule {}
