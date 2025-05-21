@@ -1,9 +1,9 @@
 export interface User {
-    accessToken: string;
+ accessToken: string;
 }
 
 export interface Url {
-    longUrl: string;
-    shortCode: string;
-    userId: string;
+ longUrl: string;
+ shortCode: string;
+ userId: string;
 }
