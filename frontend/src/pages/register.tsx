@@ -66,7 +66,7 @@ export default function RegisterPage() {
  async function onSubmit(values: FormValues) {
   setIsSubmitting(true);
   try {
-   await register(values.name, values.email, values.password);
+   await register(values.email, values.password);
    toast("Your account has been created. Please sign in.");
    navigate("/login");
   } catch (error) {

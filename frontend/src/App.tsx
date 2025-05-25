@@ -5,6 +5,7 @@ import Layout from "./components/layout";
 import LoginPage from "@/pages/login.tsx";
 import RegisterPage from "@/pages/register.tsx";
 import HomePage from "@/pages/home.tsx";
+import MagicLinkHandler from "./components/MagicLinkHandler";
 
 function App() {
  return (
@@ -14,6 +15,7 @@ function App() {
      <Route index element={<Navigate to="/login" replace />} />
      <Route path="login" element={<LoginPage />} />
      <Route path="register" element={<RegisterPage />} />
+     <Route path="auth/magic/:token" element={<MagicLinkHandler />} />
      <Route
       path="home"
       element={
