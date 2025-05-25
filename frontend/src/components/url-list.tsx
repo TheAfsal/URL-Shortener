@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 
 import { useEffect } from "react";
@@ -11,6 +14,7 @@ import { copyToClipboard } from "../lib/utils";
 
 export default function UrlList() {
  const { urls, fetchUrls, isLoading } = useUrlStore();
+ const server_url = import.meta.env.VITE_API_URL || ""
 
  useEffect(() => {
   fetchUrls().catch(() => {
@@ -49,22 +53,24 @@ export default function UrlList() {
         <TableRow className="border-blue-800/30 hover:bg-blue-900/20">
          <TableHead className="text-blue-200">Short URL</TableHead>
          <TableHead className="text-blue-200">Original URL</TableHead>
-         {/*<TableHead className="text-blue-200">Created</TableHead>*/}
          <TableHead className="text-blue-200">Actions</TableHead>
         </TableRow>
        </TableHeader>
        <TableBody>
         {urls.map((url) => (
          <TableRow key={url.id} className="border-blue-800/30 hover:bg-blue-900/20">
-          <TableCell className="font-medium text-blue-100">{url.shortCode}</TableCell>
-          <TableCell className="text-blue-300 truncate max-w-[200px]">{url.longUrl}</TableCell>
-          {/*<TableCell className="text-blue-300">{formatDate(url.createdAt)}</TableCell>*/}
+          <TableCell className="font-medium text-blue-100">{`${server_url}/api/url/${url.shortCode}`}</TableCell>
+          
+          <TableCell className="text-blue-300 truncate max-w-[200px]">{
+          //@ts-ignore
+          url.longUrl
+          }</TableCell>
           <TableCell>
            <div className="flex gap-2">
             <Button
              variant="outline"
              size="sm"
-             onClick={() => handleCopy(url.shortCode)}
+             onClick={() => handleCopy(`${server_url}/api/url/${url.shortCode}`)}
              className="border-blue-800/50 hover:bg-blue-800/50 text-blue-300"
             >
              <Copy className="h-4 w-4" />
@@ -73,7 +79,7 @@ export default function UrlList() {
             <Button
              variant="outline"
              size="sm"
-             onClick={() => window.open(`/api/url/${url.shortCode}`, "_blank")}
+             onClick={() => window.open(`${server_url}/api/url/${url.shortCode}`, "_blank")}
              className="border-blue-800/50 hover:bg-blue-800/50 text-blue-300"
             >
              <ExternalLink className="h-4 w-4" />

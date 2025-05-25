@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -44,7 +45,13 @@ type FormValues = z.infer<typeof formSchema>;
 export default function RegisterPage() {
  const [isSubmitting, setIsSubmitting] = useState(false);
  const navigate = useNavigate();
- const { register } = useAuthStore();
+ const { register, isAuthenticated } = useAuthStore();
+
+ useEffect(() => {
+  if (isAuthenticated) {
+   navigate("/home");
+  }
+ }, [isAuthenticated, navigate]);
 
  const form = useForm<FormValues>({
   resolver: zodResolver(formSchema),
