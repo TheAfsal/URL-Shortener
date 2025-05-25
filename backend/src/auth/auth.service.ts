@@ -7,29 +7,32 @@ import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor(
-        @InjectModel(User.name) private userModel: Model<User>,
-        private jwtService: JwtService,
-    ) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<User>,
+    private jwtService: JwtService,
+  ) {}
 
-    async register(email: string, password: string): Promise<User> {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new this.userModel({ email, password: hashedPassword });
-        return user.save();
-    }
+  async register(email: string, password: string): Promise<User> {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const user = new this.userModel({ email, password: hashedPassword });
+    return user.save();
+  }
 
-    async login(email: string, password: string): Promise<{ accessToken: string }> {
-        const user = await this.userModel.findOne({ email });
-        if (!user || !(await bcrypt.compare(password, user.password))) {
-            throw new UnauthorizedException('Invalid credentials');
-        }
-        const payload = { email: user.email, sub: user._id };
-        return {
-            accessToken: this.jwtService.sign(payload),
-        };
+  async login(
+    email: string,
+    password: string,
+  ): Promise<{ accessToken: string }> {
+    const user = await this.userModel.findOne({ email });
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      throw new UnauthorizedException('Invalid credentials');
     }
+    const payload = { email: user.email, sub: user._id };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
+  }
 
-    async validateUser(email: string): Promise<User | null> {
-        return this.userModel.findOne({ email });
-    }
+  async validateUser(email: string): Promise<User | null> {
+    return this.userModel.findOne({ email });
+  }
 }

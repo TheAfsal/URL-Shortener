@@ -28,7 +28,7 @@ export const useAuthStore = create<AuthState>()(
    isAuthenticated: false,
 
    login: async (email: string, password: string) => {
-    const response = await api.post("/api/auth/login", { email, password });
+    const response = await api.post("/auth/login", { email, password });
     const { user, accessToken, refreshToken } = response.data;
 
     set({
@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>()(
    },
 
    register: async (name: string, email: string, password: string) => {
-    await api.post("/api/auth/register", { name, email, password });
+    await api.post("/auth/register", { name, email, password });
    },
 
    logout: () => {
@@ -60,7 +60,7 @@ export const useAuthStore = create<AuthState>()(
     }
 
     try {
-     const response = await api.post("/api/auth/refresh", { refreshToken });
+     const response = await api.post("/auth/refresh", { refreshToken });
      const { accessToken, newRefreshToken } = response.data;
 
      set({
