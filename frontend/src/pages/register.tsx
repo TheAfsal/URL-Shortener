@@ -67,7 +67,7 @@ export default function RegisterPage() {
   setIsSubmitting(true);
   try {
    await register(values.email, values.password);
-   toast("Your account has been created. Please sign in.");
+   toast("Verify your email. Please check your inbox.");
    navigate("/login");
   } catch (error) {
    toast("This email may already be in use. Please try another.");
