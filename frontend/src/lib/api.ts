@@ -31,9 +31,9 @@ api.interceptors.response.use(
    originalRequest._retry = true;
 
    try {
-    const newAccessToken = await useAuthStore.getState().refreshAccessToken();
+    // const newAccessToken = await useAuthStore.getState().accessToken();
 
-    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+    // originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
     return api(originalRequest);
    } catch (refreshError) {
